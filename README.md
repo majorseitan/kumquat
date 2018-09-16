@@ -1,12 +1,15 @@
-# Setup
-## configure with your credentials
+# kumquat
+  A personal twitter client.
+
+## Setup
+### configure with your credentials
 
    mv config.py.sample config.py
 
    https://developer.twitter.com/en/apps
    details -> keys and tokens
 
-## create your schema
+### create your schema
 
 ```python
 from app import db
