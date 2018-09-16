@@ -40,10 +40,13 @@ def job():
     for status in statuses:
         created = datetime.strptime(status["created_at"],'%a %b %d %H:%M:%S +0000 %Y')
         id = status['id']
-        if Message.query.filter_by(id=id).count() == 0 :
-            msg = Message(id=id,created=created,status=json.dumps(status))
-            db.session.add(msg)
-            db.session.commit()
+        q = db.session.query(Message).filter(Message.id==id)
+        if db.session.query(q.exists()).scalar():
+            try:
+                msg = Message(id=id,created=created,status=json.dumps(status))
+                db.session.add(msg)
+                db.session.commit()
+            except Exception as e: print(e)
 
 def run_schedule():
     while 1:
