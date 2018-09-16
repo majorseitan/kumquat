@@ -9,7 +9,7 @@ from flask_restful import Resource, Api
 import json
 from threading import Thread
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 db = SQLAlchemy(app)
@@ -49,6 +49,11 @@ def run_schedule():
     while 1:
         schedule.run_pending()
         time.sleep(1)
+
+@app.route('/')
+def show_entries():
+    #return render_template('search.html', query=None, entries=None)
+    return app.send_static_file('index.html')
 
 
 api = Api(app)

@@ -3,3 +3,7 @@
 config.py
 *~
 __pycache__
+
+#virtual environment
+venv
+static
