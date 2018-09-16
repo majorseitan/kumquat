@@ -31,10 +31,10 @@ twitter = Twitter(auth = OAuth(config.access_key,
 
 class MessageList(Resource):
     def get(self):
-        return [ json.loads(m.status)  for m in Message.query.all() ]
+        return [ json.loads(m.status)  for m in Message.query.order_by(Message.created.desc()).all() ]
 
 def job():
-    print("start :")
+    print("updating :")
     statuses = twitter.statuses.home_timeline(count = 200)
     print("loading : '%d'",len(statuses))
     for status in statuses:

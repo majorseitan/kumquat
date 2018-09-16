@@ -1,0 +1,11 @@
+#--------------------------------------------------------------------------------
+# These tokens are needed for user authentication.
+# Credentials can be generates via Twitter's Application Management:
+#	https://apps.twitter.com/app/new
+#--------------------------------------------------------------------------------
+# source : https://github.com/ideoforms/python-twitter-examples
+
+consumer_key = "xxxxxxxxxxxxxxxxxxxxxx"
+consumer_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+access_key = "xxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+access_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
