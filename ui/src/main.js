@@ -11,3 +11,6 @@ Vue.config.productionTip = false
 new Vue({
     render: h => h(App)
 }).$mount('#app')
+Vue.filter('toUserURL', function (value) {
+    return `https://twitter.com/${value}`;
+});

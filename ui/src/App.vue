@@ -10,9 +10,9 @@
         <table class="table" v-if="messages != null">
           <tbody>
             <tr v-for="module in messages"  v-bind:key="module.id">
-	       <div class="card" style="width: 18rem;">
+               <div class="card" style="width: 18rem;">
                   <div class="card-body">
-                     <h5 class="card-title"><img align="bottom" style="height: 0.8em;" v-bind:src="module.user.profile_image_url"/>{{ module.user.name }}</h5>
+                     <h5 class="card-title"><img align="bottom" style="height: 0.8em;" v-bind:src="module.user.profile_image_url"/><a v-bind:href="module.user.screen_name | toUserURL">{{ module.user.name }}</a></h5>
                      <p class="card-text" v-html="module.text"></p>
                   </div>
               </div>
@@ -27,7 +27,7 @@
 
 <script>
 function escape_url(text){
-  var re = /(https:\/\/[^\\s]+)/gi;
+  var re = /(https:\/\/[^\\ ]+)/gi;
   return text.replace(re, '<a href="$1">$1</a>');
 }
 
@@ -35,22 +35,10 @@ export default {
   name: 'app',
   data () {
     return {
-        summary : null ,
-        searchResult : null,
-        searchWord : null,
-	messages : null,
+	messages : null
     }
   },
     methods: {
-     search_keywords: function () {
-            var s = document.getElementById("searchWord").value;
-            fetch('proofforge/repository/search?coqEntityId='+s)
-                .then((res) => res.json())
-                .then((data) => {
-                    this.searchResult = data;
-                });
-            return false;
-        }
     },
     created() {
       fetch('messages')

@@ -21,32 +21,39 @@ class Message(db.Model):
     status = db.Column(db.String(500), primary_key=True)
 
     def __repr__(self):
-        return "{ id : '%s' , created : '%s' , status : '%s' }" % (self.id,self.created,self.status)
+        return "{ id : '%s' , created : '%s' , status : '%s' }" % (self.id, self.created, self.status)
 
 
-twitter = Twitter(auth = OAuth(config.access_key,
-                  config.access_secret,
-                  config.consumer_key,
-                  config.consumer_secret))
+twitter = Twitter(auth=OAuth(config.access_key,
+                             config.access_secret,
+                             config.consumer_key,
+                             config.consumer_secret))
 
 class MessageList(Resource):
     def get(self):
-        return [ json.loads(m.status)  for m in Message.query.order_by(Message.created.desc()).all() ]
+        return [json.loads(m.status)  for m in Message.query.order_by(Message.created.desc()).all()]
 
 def job():
-    print("updating :")
-    statuses = twitter.statuses.home_timeline(count = 200)
-    print("loading : '%d'",len(statuses))
-    for status in statuses:
-        created = datetime.strptime(status["created_at"],'%a %b %d %H:%M:%S +0000 %Y')
-        id = status['id']
-        q = db.session.query(Message).filter(Message.id==id)
-        if db.session.query(q.exists()).scalar():
-            try:
-                msg = Message(id=id,created=created,status=json.dumps(status))
-                db.session.add(msg)
-                db.session.commit()
-            except Exception as e: print(e)
+    try:
+        print("updating :")
+        record_count = 0
+        statuses = twitter.statuses.home_timeline(count=200)
+        print("loading : '%d'", len(statuses))
+        for status in statuses:
+            created = datetime.strptime(status["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
+            id = status['id']
+            q = db.session.query(Message).filter(Message.id == id)
+            if not db.session.query(q.exists()).scalar():
+                try:
+                    msg = Message(id=id, created=created, status=json.dumps(status))
+                    db.session.add(msg)
+                    db.session.commit()
+                    record_count = record_count + 1
+                except Exception as e:
+                    print(e)
+        print("new : '%d'", record_count)
+    except Exception as e:
+        print(e)
 
 def run_schedule():
     while 1:

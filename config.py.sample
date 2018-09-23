@@ -4,7 +4,8 @@
 #	https://apps.twitter.com/app/new
 #--------------------------------------------------------------------------------
 # source : https://github.com/ideoforms/python-twitter-examples
-
+# keys : https://developer.twitter.com/en/apps
+#
 consumer_key = "xxxxxxxxxxxxxxxxxxxxxx"
 consumer_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 access_key = "xxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
